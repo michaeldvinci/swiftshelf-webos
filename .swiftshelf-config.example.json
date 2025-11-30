@@ -1,0 +1,6 @@
+{
+  "host": "https://your-audiobookshelf-server.com",
+  "apiKey": "your-api-key-here",
+  "username": "your-username",
+  "password": "your-password"
+}

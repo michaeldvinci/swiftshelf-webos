@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+    <title>SwiftShelf</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-card">
+                <h1 class="app-title">SwiftShelf</h1>
+
+                <!-- Auth Type Selector -->
+                <div class="auth-type-selector">
+                    <button id="auth-type-btn" class="auth-type-button focusable" data-index="0">
+                        <span id="auth-type-label">Username / Password</span>
+                        <span class="dropdown-arrow">&#9662;</span>
+                    </button>
+                </div>
+
+                <!-- Auth Type Dropdown (hidden by default) -->
+                <div id="auth-type-dropdown" class="dropdown hidden">
+                    <div class="dropdown-item focusable" data-auth-type="username" data-index="0">Username / Password</div>
+                    <div class="dropdown-item focusable" data-auth-type="apikey" data-index="1">API Key</div>
+                </div>
+
+                <!-- Host URL (always visible) -->
+                <div class="input-group">
+                    <label for="host-url">Server URL</label>
+                    <input type="text" id="host-url" class="focusable" placeholder="https://your-server.com" data-index="1">
+                </div>
+
+                <!-- Username/Password Fields -->
+                <div id="username-password-fields">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="focusable" placeholder="Your username" data-index="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="focusable" placeholder="Your password" data-index="3">
+                    </div>
+                </div>
+
+                <!-- API Key Field (hidden by default) -->
+                <div id="api-key-field" class="hidden">
+                    <div class="input-group">
+                        <label for="api-key">API Key</label>
+                        <input type="password" id="api-key" class="focusable" placeholder="Your API Key" data-index="2">
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-message" class="error-message hidden"></div>
+
+                <!-- Connect Button -->
+                <button id="connect-btn" class="connect-button focusable" data-index="4">
+                    <span id="connect-text">Connect</span>
+                    <div id="connect-spinner" class="spinner hidden"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Library Selection Screen -->
+        <div id="library-selection-screen" class="screen">
+            <div class="library-selection-card">
+                <h1 class="card-title">Select Libraries</h1>
+                <div id="library-list" class="library-list">
+                    <!-- Library checkboxes will be dynamically inserted here -->
+                </div>
+                <button id="library-continue-btn" class="connect-button focusable" disabled>
+                    <span>Continue</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Library Screen -->
+        <div id="library-screen" class="screen">
+            <!-- Background Image -->
+            <div id="library-background" class="library-background"></div>
+            <div class="library-overlay"></div>
+
+            <!-- Sidebar / Drawer -->
+            <div id="sidebar" class="sidebar">
+                <div class="sidebar-header">
+                    <h2>SwiftShelf</h2>
+                </div>
+                <div class="sidebar-content">
+                    <div class="sidebar-section">
+                        <h3>Libraries</h3>
+                        <div id="sidebar-libraries" class="sidebar-libraries">
+                            <!-- Library items will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-footer">
+                    <button id="search-btn" class="sidebar-button focusable">
+                        <span class="icon">&#128269;</span> Search
+                    </button>
+                    <button id="settings-btn" class="sidebar-button focusable">
+                        <span class="icon">&#9881;</span> Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Info Panel (Left Side) -->
+            <div id="content-info" class="content-info">
+                <div class="content-meta" id="content-meta"></div>
+                <h2 class="content-title" id="content-title"></h2>
+                <p class="content-description" id="content-description"></p>
+            </div>
+
+            <!-- Carousel Section (Bottom) -->
+            <div class="carousel-section">
+                <!-- Continue Listening Row -->
+                <div id="continue-listening-section" class="carousel-row hidden">
+                    <h3 class="carousel-title">Continue Listening</h3>
+                    <div id="continue-carousel" class="carousel">
+                        <!-- Items will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Recent Books Row -->
+                <div class="carousel-row">
+                    <h3 class="carousel-title">Recent Books</h3>
+                    <div id="books-carousel" class="carousel">
+                        <!-- Book items will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Screen -->
+        <div id="search-screen" class="screen">
+            <div class="search-container">
+                <div class="search-header">
+                    <input type="text" id="search-input" class="search-input focusable" placeholder="Search for books, authors, or series...">
+                    <button id="search-submit-btn" class="search-submit focusable">Search</button>
+                </div>
+                <div id="search-results" class="search-results">
+                    <!-- Search results will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Screen -->
+        <div id="player-screen" class="screen">
+            <div class="player-container">
+                <!-- Cover Art -->
+                <div class="player-cover">
+                    <img id="player-cover-img" src="" alt="Cover">
+                </div>
+
+                <!-- Metadata -->
+                <div class="player-info">
+                    <h1 id="player-title" class="player-title"></h1>
+                    <p id="player-author" class="player-author"></p>
+                    <p id="player-chapter" class="player-chapter"></p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="player-progress">
+                    <span id="player-current-time" class="player-time">0:00</span>
+                    <div class="progress-track">
+                        <div id="player-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <span id="player-duration" class="player-time">0:00</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="player-controls">
+                    <button id="player-prev" class="player-btn focusable" title="Previous Chapter">&#9198;</button>
+                    <button id="player-rewind" class="player-btn focusable" title="Rewind 30s">&#8634;</button>
+                    <button id="player-play" class="player-btn player-btn-main focusable" title="Play/Pause">&#9654;</button>
+                    <button id="player-forward" class="player-btn focusable" title="Forward 30s">&#8635;</button>
+                    <button id="player-next" class="player-btn focusable" title="Next Chapter">&#9197;</button>
+                </div>
+
+                <!-- Speed Control -->
+                <div class="player-speed">
+                    <button id="player-speed-down" class="speed-btn focusable">-</button>
+                    <span id="player-speed-value">1.0x</span>
+                    <button id="player-speed-up" class="speed-btn focusable">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content settings-modal">
+                <h2 class="modal-title">Settings</h2>
+
+                <div class="settings-list">
+                    <!-- Libraries Selection -->
+                    <div class="setting-row">
+                        <span class="setting-label">Libraries</span>
+                        <button id="settings-libraries-btn" class="setting-value-btn focusable">
+                            <span id="settings-libraries-count">0 selected</span>
+                            <span class="dropdown-arrow">&#9662;</span>
+                        </button>
+                    </div>
+
+                    <!-- Items per Library -->
+                    <div class="setting-row">
+                        <span class="setting-label">Items per Library</span>
+                        <div class="setting-stepper">
+                            <button id="item-limit-down" class="stepper-btn focusable">-</button>
+                            <span id="item-limit-value">20</span>
+                            <button id="item-limit-up" class="stepper-btn focusable">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Playback Speed -->
+                    <div class="setting-row">
+                        <span class="setting-label">Playback Speed</span>
+                        <div class="setting-stepper">
+                            <button id="playback-speed-down" class="stepper-btn focusable">-</button>
+                            <span id="playback-speed-value">1.0x</span>
+                            <button id="playback-speed-up" class="stepper-btn focusable">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar Color -->
+                    <div class="setting-row">
+                        <span class="setting-label">Progress Bar Color</span>
+                        <button id="settings-color-btn" class="setting-value-btn focusable">
+                            <span class="color-preview" id="color-preview"></span>
+                            <span id="color-value">Yellow</span>
+                            <span class="dropdown-arrow">&#9662;</span>
+                        </button>
+                    </div>
+
+                    <!-- Server Info -->
+                    <div class="setting-row setting-info">
+                        <span class="setting-label">Server</span>
+                        <span id="settings-server-url" class="setting-value-text"></span>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button id="settings-logout-btn" class="modal-btn danger focusable">Logout</button>
+                    <button id="settings-close-btn" class="modal-btn primary focusable">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book Details Modal -->
+        <div id="book-details-modal" class="modal hidden">
+            <div class="modal-content book-details-modal">
+                <div class="book-details-layout">
+                    <div class="book-details-cover">
+                        <img id="details-cover-img" src="" alt="Cover">
+                        <div class="book-details-progress">
+                            <div id="details-progress-bar" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="book-details-info">
+                        <h2 id="details-title" class="details-title"></h2>
+                        <p id="details-author" class="details-author"></p>
+                        <p id="details-narrator" class="details-narrator"></p>
+                        <p id="details-duration" class="details-duration"></p>
+                        <p id="details-description" class="details-description"></p>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button id="details-close-btn" class="modal-btn focusable">Back</button>
+                    <button id="details-play-btn" class="modal-btn primary focusable">Play</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Picker Modal -->
+        <div id="color-picker-modal" class="modal hidden">
+            <div class="modal-content color-picker-modal">
+                <h2 class="modal-title">Progress Bar Color</h2>
+                <div class="color-grid" id="color-grid">
+                    <!-- Color options will be inserted here -->
+                </div>
+                <div class="modal-buttons">
+                    <button id="color-picker-close" class="modal-btn focusable">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Picker Modal -->
+        <div id="library-picker-modal" class="modal hidden">
+            <div class="modal-content library-picker-modal">
+                <h2 class="modal-title">Select Libraries</h2>
+                <div id="library-picker-list" class="library-picker-list">
+                    <!-- Library checkboxes will be inserted here -->
+                </div>
+                <div class="modal-buttons">
+                    <button id="library-picker-close" class="modal-btn primary focusable">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
