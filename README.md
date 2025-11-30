@@ -2,7 +2,7 @@
 
 A native webOS TV client for [Audiobookshelf](https://www.audiobookshelf.org/) - listen to your audiobook library on LG smart TVs.
 
-![SwiftShelf Carousel](_res/carousel.png)
+<img src="_res/carousel.png" width="700">
 
 ## Features
 
@@ -19,15 +19,15 @@ A native webOS TV client for [Audiobookshelf](https://www.audiobookshelf.org/) -
 
 | Library View | Sidebar Navigation |
 |:---:|:---:|
-| ![Carousel](_res/carousel.png) | ![Sidebar](_res/sidebar.png) |
+| <img src="_res/carousel.png" width="500" height="300"> | <img src="_res/sidebar.png" width="500" height="300"> |
 
 | Audiobook Details | Audio Player |
 |:---:|:---:|
-| ![Item Info](_res/item-info.png) | ![Player](_res/player.png) |
+| <img src="_res/item-info.png" width="500" height="300"> | <img src="_res/player.png" width="500" height="300"> |
 
 | Settings |
 |:---:|
-| ![Settings](_res/settings.png) |
+| <img src="_res/settings.png" width="500" height="300"> |
 
 ## Installation
 
