@@ -1,41 +1,78 @@
 # SwiftShelf for webOS
 
-A native webOS TV client for [Audiobookshelf](https://www.audiobookshelf.org/) - listen to your audiobook library on LG smart TVs.
+<p align="center">
+  <img src="_res/carousel.png" alt="SwiftShelf Library View" width="700"/>
+</p>
 
-<img src="_res/carousel.png" width="700">
+SwiftShelf is a webOS Audiobookshelf client for LG smart TVs. It provides fast, focused navigation of your Audiobookshelf libraries with fully integrated playback, chapter navigation, and progress syncing, presenting your collection in a sleek carousel interface that stays remote-friendly.
 
-## Features
+## Key Features
 
-- Browse your Audiobookshelf libraries
-- Continue listening from where you left off
-- Full playback controls with chapter navigation
-- Progress sync with your Audiobookshelf server
-- Search across your library
-- TV-optimized remote control navigation
-- Customizable playback speed
-- Support for multiple libraries
+### Connection & Authentication
+- **Flexible Authentication**
+  Log in with either username/password or API key. Credentials are stored locally so reconnecting after app relaunches is seamless.
 
-## Screenshots
+- **Library Selection & Persistence**
+  Choose from your available Audiobookshelf libraries. The app remembers your selections and loads them automatically on launch.
 
-| Library View | Sidebar Navigation |
-|:---:|:---:|
-| <img src="_res/carousel.png" width="500" height="300"> | <img src="_res/sidebar.png" width="500" height="300"> |
+### Library Browsing
+- **Recent & Continue Listening Carousels**
+  Browse your most recently added audiobooks and quickly jump back into in-progress titles. Each carousel shows cover artwork, author, and duration with playback progress overlays.
+  ![Library view](_res/carousel.png)
 
-| Audiobook Details | Audio Player |
-|:---:|:---:|
-| <img src="_res/item-info.png" width="500" height="300"> | <img src="_res/player.png" width="500" height="300"> |
+- **Sidebar Navigation**
+  Access your libraries, search, and settings from the slide-out sidebar menu.
+  ![Sidebar](_res/sidebar.png)
 
-| Settings |
-|:---:|
-| <img src="_res/settings.png" width="500" height="300"> |
+- **Search**
+  Query your Audiobookshelf library to find books, authors, and series quickly.
 
-## Installation
+### Item Details & Playback
+- **Item Detail View**
+  Selecting a title opens a detailed view with cover artwork, author, narrator, description, and progress information.
+  ![Item info view](_res/item-info.png)
 
-### Prerequisites
+- **Full-Screen Player**
+  A dedicated player view with:
+  - Large cover artwork and metadata
+  - Progress bar with current time and duration
+  - Transport controls: previous chapter, skip back 30s, play/pause, skip forward 30s, next chapter
+  - Playback speed adjustment (0.5x - 3.0x)
+  - Chapter display
+
+  ![Player](_res/player.png)
+
+### Progress & Sync
+- **Server Progress Tracking**
+  Playback progress syncs with your Audiobookshelf server. Resume where you left off across all your devices (web, mobile, TV).
+
+- **Session Management**
+  Listening sessions are tracked and reported to the server, including total time listened and playback position.
+
+### Customization
+- **Customizable Experience**
+  Tune how many items each library fetches, pick the progress bar color, and set a preferred default playback speed. All settings persist across sessions.
+
+  ![Settings](_res/settings.png)
+
+- **Optimized for TV Navigation**
+  All carousels, lists, and player controls are remote-friendly with visual focus indicators for a smooth TV experience.
+
+## Example Flow
+
+1. **Login**: Supply host and credentials on the login screen.
+2. **Library Selection**: Choose which library(ies) you want to browse.
+3. **Browse**: Explore recent and in-progress items, or use search to find what you need.
+4. **View Details**: Select a title to see its full details and description.
+5. **Play**: Start playback from the detail view. Use the player controls to navigate chapters and adjust speed.
+6. **Resume Anywhere**: Your progress syncs automatically - pick up where you left off on any device.
+
+## Requirements
 
 - LG webOS TV (webOS 3.0+)
-- [Audiobookshelf](https://www.audiobookshelf.org/) server
-- [webOS TV SDK](https://webostv.developer.lge.com/develop/tools/sdk-introduction) (for development/sideloading)
+- Audiobookshelf server with API access
+
+## Installation
 
 ### Install via Homebrew Channel
 
@@ -44,7 +81,7 @@ Coming soon.
 ### Manual Installation (Sideloading)
 
 1. Enable Developer Mode on your LG TV
-2. Install the webOS TV SDK on your computer
+2. Install the [webOS TV SDK](https://webostv.developer.lge.com/develop/tools/sdk-introduction)
 3. Connect to your TV using `ares-setup-device`
 4. Install the IPK:
    ```bash
@@ -53,16 +90,9 @@ Coming soon.
 
 ## Configuration
 
-SwiftShelf supports two authentication methods:
-
-### Username & Password
-Enter your Audiobookshelf server URL, username, and password directly in the app.
-
-### API Key
-1. Log into your Audiobookshelf server web interface
-2. Go to Settings > Users > Your User > API Token
-3. Copy the API key
-4. Enter your server URL and API key in the app
+- **Host**: Your Audiobookshelf base URL (e.g., `https://library.example.net`)
+- **Username/Password** or **API Key**: Your Audiobookshelf credentials
+- Optional: Add a `.swiftshelf-config.json` with `host`, `apiKey`, `username`, and `password` to auto-populate the login form during development. An example file lives at `.swiftshelf-config.example.json`.
 
 ## Development
 
@@ -124,33 +154,3 @@ Then open `http://localhost:3000` in your browser.
 |--------|--------|
 | **Left/Right** | Seek -/+ 30 seconds |
 | **Up/Down** | Previous/Next chapter |
-
-## Project Structure
-
-```
-swiftshelf-webos/
-├── index.html          # Main HTML
-├── appinfo.json        # webOS app manifest
-├── css/
-│   └── styles.css      # Styles
-├── js/
-│   ├── api.js          # Audiobookshelf API client
-│   ├── storage.js      # Local storage handling
-│   ├── navigation.js   # TV remote navigation
-│   └── app.js          # Main application logic
-├── icon.png            # App icon (80x80)
-└── largeIcon.png       # Large app icon (130x130)
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-- [Audiobookshelf](https://www.audiobookshelf.org/) - The amazing self-hosted audiobook server
-- [webOS TV Developer](https://webostv.developer.lge.com/) - LG's developer resources
